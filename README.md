@@ -1,13 +1,53 @@
+
+## Como desenvolver?
+
+1. Clone o repositório.
+2. Crie um virtualenv com Python 3.6
+3. Ative o virtualenv.
+4. Instale as dependências.
+5. Configure a instância com o .env
+6. Execute os testes.
+
+```console
+git clone git@github.com:adrianomargarin/challenge-for-developers.git
+cd challenge-for-developers
+virtualenv env --python=python3
+source env/bin/activate
+pip install -r requirements_dev.txt
+cp contrib/env-sample .env
+python manage.py test
+
+```
+
+## Como fazer o deploy?
+
+1. Crie uma instância no heroku.
+2. Envie as configurações para o heroku.
+3. Define um SECRET_KEY segura para instância.
+4. Defina DEBUG=False
+5. Envie o código para o heroku.
+
+```console
+heroku create minhainstancia
+
+heroku config:push
+heroku config:set SECRET_KEY=`python contrib/secret_gen.py`
+heroku config set DEBUG=False
+
+git push heroku master --force
+```
+
+
 ## Overview
 
-O Github é uma rede social de programadores que possui uma funcionalidade interessante que permite curtir o repositório alheio. Trata-se de um botão escrito Star encontrado na página de cada repositório.  
-Rick é um usuário ativo do Github que está sempre buscando novos projetos curtindo os que acha interessantes. Ele gostaria de poder adicionar um label ou tag para marcar o repositório de modo que ele possa filtrar. Por exemplo, ele encontrou um repositório chamado `react` e gostaria de adicionar as tags *javascript* e *frontend*.  
+O Github é uma rede social de programadores que possui uma funcionalidade interessante que permite curtir o repositório alheio. Trata-se de um botão escrito Star encontrado na página de cada repositório.
+Rick é um usuário ativo do Github que está sempre buscando novos projetos curtindo os que acha interessantes. Ele gostaria de poder adicionar um label ou tag para marcar o repositório de modo que ele possa filtrar. Por exemplo, ele encontrou um repositório chamado `react` e gostaria de adicionar as tags *javascript* e *frontend*.
 Como o Github não possui essa funcionalidade, Rick precisa de um sistema que consiga ajudá-lo com isso.
 
 ## Tecnologias
 
-Na brainn.co não trabalhamos com uma linguagem ou framework apenas. Somos poliglotas e incentivamos o uso de novas tecnologias desde que o time concorde em conjunto e esteja preparado para assumir os riscos de ter que reimplementar utilizando alguma tecnologia mais tradicional em casos de incidentes.  
-Entretanto, nesse momento, estamos com um time pequeno e por enquanto nossas opções de linguagem são limitadas.  
+Na brainn.co não trabalhamos com uma linguagem ou framework apenas. Somos poliglotas e incentivamos o uso de novas tecnologias desde que o time concorde em conjunto e esteja preparado para assumir os riscos de ter que reimplementar utilizando alguma tecnologia mais tradicional em casos de incidentes.
+Entretanto, nesse momento, estamos com um time pequeno e por enquanto nossas opções de linguagem são limitadas.
 Escolha uma das linguagens abaixo para o desafio:
 
 * Python
@@ -135,8 +175,8 @@ O usuário acessa o sistema pelo browser, digita uma tag e clica no botão. O si
 
 ## Considerações Finais
 
-Entendemos as dificuldades do dia-a-dia para quem trabalha em ter que dedicar um tempo para resolver esse tipo de desafio. Por isso pedimos para que mesmo que você não consiga completar o desafio, nos envie assim mesmo. Não queremos julgar nossos candidatos, queremos apenas entender melhor a maneira como cada um pensa e age diante de um problema comum no mercado.  
+Entendemos as dificuldades do dia-a-dia para quem trabalha em ter que dedicar um tempo para resolver esse tipo de desafio. Por isso pedimos para que mesmo que você não consiga completar o desafio, nos envie assim mesmo. Não queremos julgar nossos candidatos, queremos apenas entender melhor a maneira como cada um pensa e age diante de um problema comum no mercado.
 
-Qualquer dúvida pode entrar em contato conosco.  
+Qualquer dúvida pode entrar em contato conosco.
 
 Boa sorte!!!
