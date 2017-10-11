@@ -13,7 +13,8 @@ class GithubAPI(object):
             result.append({
                 'id': content['id'],
                 'name': content['name'],
-                'url': content['url']
+                'url': content['url'],
+                'username': self.username
             })
 
         return result
