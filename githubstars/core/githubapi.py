@@ -14,7 +14,8 @@ class GithubAPI(object):
                 'id': content['id'],
                 'name': content['name'],
                 'url': content['url'],
-                'username': self.username
+                'language': content['language'],
+                'username': self.username,
             })
 
         return result

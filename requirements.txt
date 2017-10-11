@@ -8,3 +8,4 @@ static3==0.7.0
 gunicorn==19.7.1
 psycopg2==2.7.3.1
 pytz
+Fabric3==1.13.1.post1

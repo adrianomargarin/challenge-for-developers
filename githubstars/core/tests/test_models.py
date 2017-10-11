@@ -7,7 +7,7 @@ from githubstars.core.models import Repository
 class RepositoryModelTest(TestCase):
 
     def setUp(self):
-        self.obj = Repository(repo_id=1, name='Test', url='http://github.com')
+        self.obj = Repository(repo_id=1, name='Test', url='http://github.com', language='python')
         self.obj.save()
 
     def test_create(self):

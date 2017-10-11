@@ -11,6 +11,7 @@ class Repository(models.Model):
     name = models.CharField(verbose_name='Nome', max_length=255)
     url = models.URLField(verbose_name='URL do Repositório')
     username = models.CharField(verbose_name='Usuário', max_length=255)
+    language = models.CharField(verbose_name='Linguagem', max_length=255)
     created_at = models.DateTimeField(verbose_name='Criado em', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='Atualizado em', auto_now=True)
 
