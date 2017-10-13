@@ -8,7 +8,8 @@ class HomeTest(BaseTest):
     def setUp(self):
         self.login()
 
-        repository = mommy.make('core.Repository', name='Nome', url='http://github.com', language='Python')
+        repository = mommy.make('core.Repository', user=self.user, name='Nome', url='http://github.com',
+                                language='Python')
         repository.tags.add(mommy.make('core.Tag', name='python'))
         repository.tags.add(mommy.make('core.Tag', name='django'))
 
@@ -22,24 +23,20 @@ class HomeTest(BaseTest):
         """Must use base.html"""
         self.assertTemplateUsed(self.response, 'base.html')
 
-    # def test_html(self):
-    #     tags = (
-    #         ('<form', 1),
-    #         ('<input', 1),
-    #         ('<button', 2),
-    #         ('type="submit"', 1),
-    #         ('<table', 1),
-    #         ('<thead', 1),
-    #         ('<tbody', 1),
-    #         ('<th>Nome</th>', 1),
-    #         ('<th>URl</th>', 1),
-    #         ('<th>Linguagem</th>', 1),
-    #         ('<th>Tags</th>', 1),
-    #         ('<td>Nome', 1),
-    #         ('<td><a href="http://github.com"', 1),
-    #         ('<td>Python', 1),
-    #         ('<td>python, django', 1),
-    #     )
-    #     for text, count in tags:
-    #         with self.subTest():
-    #             self.assertContains(self.response, text, count)
+    def test_html(self):
+        tags = (
+            ('<table', 1),
+            ('<thead', 1),
+            ('<tbody', 1),
+            ('<th>Nome</th>', 1),
+            ('<th>URl</th>', 1),
+            ('<th>Linguagem</th>', 1),
+            ('<th>Tags</th>', 1),
+            ('<td>Nome', 1),
+            ('<td><a href="http://github.com"', 1),
+            ('<td>Python', 1),
+            ('<td>python, django', 1),
+        )
+        for text, count in tags:
+            with self.subTest():
+                self.assertContains(self.response, text, count)

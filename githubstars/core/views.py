@@ -1,5 +1,6 @@
 from django.urls import reverse_lazy
 from django.http import JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.generic import View
@@ -10,6 +11,7 @@ from django.utils.decorators import method_decorator
 
 from githubstars.core.models import Repository
 from githubstars.core.forms import RegisterForm
+from githubstars.core.githubapi import GithubAPI
 
 
 class BaseView(View):
@@ -80,3 +82,21 @@ class RepositoryView(BaseView):
 
 
 repositories = RepositoryView.as_view()
+
+
+class GetRepositoriesView(BaseView):
+
+    def get(self, request):
+        contents = GithubAPI(request.user.username).get_content()
+
+        for content in contents:
+            Repository.objects.get_or_create(repo_id=content['id'],
+                                             name=content['name'],
+                                             url=content['url'],
+                                             user=request.user,
+                                             language=content['language'])
+
+        return redirect(reverse_lazy('home'))
+
+
+get_repositories = GetRepositoriesView.as_view()

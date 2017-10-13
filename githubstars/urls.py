@@ -22,6 +22,7 @@ from django.contrib.auth.views import logout
 from githubstars.core.views import home
 from githubstars.core.views import register
 from githubstars.core.views import repositories
+from githubstars.core.views import get_repositories
 
 
 urlpatterns = [
@@ -30,5 +31,6 @@ urlpatterns = [
     url(r'^logout/$', logout, {'next_page': settings.LOGIN_URL}, name='logout'),
     url(r'^register/$', register, name='register'),
     url(r'^repositories/$', repositories, name='repositories'),
+    url(r'^get_repositories/$', get_repositories, name='get_repositories'),
     url(r'^admin/', admin.site.urls),
 ]

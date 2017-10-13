@@ -14,17 +14,17 @@ class RegisterGetTest(TestCase):
     def test_template(self):
         self.assertTemplateUsed(self.response, 'register.html')
 
-    # def test_html(self):
-    #     tags = (
-    #         ('<form', 1),
-    #         ('<input', 2),
-    #         ('type="text"', 1),
-    #         ('type="password"', 2),
-    #         ('type="submit"', 1)
-    #     )
-    #     for text, count in tags:
-    #         with self.subTest():
-    #             self.assertContains(self.response, text, count)
+    def test_html(self):
+        tags = (
+            ('<form', 1),
+            ('<input', 4),
+            ('type="text"', 1),
+            ('type="password"', 2),
+            ('type="submit"', 1)
+        )
+        for text, count in tags:
+            with self.subTest():
+                self.assertContains(self.response, text, count)
 
     def test_csrf(self):
         self.assertContains(self.response, 'csrfmiddlewaretoken')

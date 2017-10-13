@@ -11,11 +11,10 @@ class GithubAPI(object):
 
         for content in contents:
             result.append({
-                'id': content['id'],
-                'name': content['name'],
-                'url': content['url'],
-                'language': content['language'],
-                'username': self.username,
+                'id': content.get('id'),
+                'name': content.get('name'),
+                'url': content.get('url'),
+                'language': content.get('language')
             })
 
         return result
