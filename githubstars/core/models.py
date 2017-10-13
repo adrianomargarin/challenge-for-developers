@@ -1,4 +1,6 @@
 from django.db import models
+from django.conf import settings
+from githubstars.core.managers import RepositoryManager
 
 
 class Tag(models.Model):
@@ -23,12 +25,17 @@ class Repository(models.Model):
 
     repo_id = models.PositiveIntegerField(verbose_name='ID do Repositório')
     name = models.CharField(verbose_name='Nome', max_length=255)
-    url = models.URLField(verbose_name='URL do Repositório')
-    username = models.CharField(verbose_name='Usuário', max_length=255)
+    url = models.URLField(verbose_name='URL')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     language = models.CharField(verbose_name='Linguagem', max_length=255)
     tags = models.ManyToManyField(Tag, verbose_name='Tags')
     created_at = models.DateTimeField(verbose_name='Criado em', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='Atualizado em', auto_now=True)
+
+    objects = RepositoryManager()
+
+    def get_tags(self):
+        return ', '.join(tag.name for tag in self.tags.all())
 
     def __str__(self):
         return self.name

@@ -1,0 +1,50 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Github Stars</title>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="{% url 'home' %}">
+          Github Stars
+        </a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    {% block content %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>URl</th>
+            <th>Linguagem</th>
+            <th>Tags</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for repository in repository_list %}
+          <tr>
+            <td>{{ repository.name }}</td>
+            <td><a href="{{ repository.url }}" target="_blank">{{ repository.url }}</a></td>
+            <td>{{ repository.language }}</td>
+            <td>{{ repository.get_list_tags }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endblock content %}
+  </div>
+</body>
+</html>

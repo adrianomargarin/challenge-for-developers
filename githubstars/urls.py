@@ -15,11 +15,20 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf import settings
+from django.contrib.auth.views import login
+from django.contrib.auth.views import logout
 
 from githubstars.core.views import home
+from githubstars.core.views import register
+from githubstars.core.views import repositories
 
 
 urlpatterns = [
     url(r'^$', home, name='home'),
+    url(r'^login/$', login, {'template_name': 'login.html'}, name='login'),
+    url(r'^logout/$', logout, {'next_page': settings.LOGIN_URL}, name='logout'),
+    url(r'^register/$', register, name='register'),
+    url(r'^repositories/$', repositories, name='repositories'),
     url(r'^admin/', admin.site.urls),
 ]

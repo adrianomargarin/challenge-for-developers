@@ -1,14 +1,15 @@
 from datetime import datetime
-from django.test import TestCase
 
 from githubstars.core.models import Tag
 from githubstars.core.models import Repository
+from githubstars.core.tests.mixins import BaseTest
 
 
-class RepositoryModelTest(TestCase):
+class RepositoryModelTest(BaseTest):
 
     def setUp(self):
-        self.obj = Repository(repo_id=1, name='Test', url='http://github.com', language='python')
+        self.create_user()
+        self.obj = Repository(user=self.user, repo_id=1, name='Test', url='http://github.com', language='python')
         self.obj.save()
 
     def test_create(self):
@@ -21,7 +22,7 @@ class RepositoryModelTest(TestCase):
         self.assertEqual('Test', str(self.obj))
 
 
-class TagModelTest(TestCase):
+class TagModelTest(BaseTest):
 
     def setUp(self):
         self.obj = Tag(name='python')
