@@ -10,3 +10,4 @@ psycopg2==2.7.3.1
 pytz
 Fabric3==1.13.1.post1
 django-widget-tweaks==1.4.1
+requests==2.18.4
