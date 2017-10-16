@@ -2,19 +2,10 @@ from django.db import models
 from django.conf import settings
 from githubstars.core.managers import RepositoryManager
 
+from django.core.exceptions import ValidationError
 
-class Tag(models.Model):
-
-    class Meta:
-        verbose_name = 'Tag'
-        verbose_name_plural = 'Tags'
-
-    name = models.CharField(verbose_name='Nome', max_length=255, unique=True)
-    created_at = models.DateTimeField(verbose_name='Criado em', auto_now_add=True)
-    updated_at = models.DateTimeField(verbose_name='Atualizado em', auto_now=True)
-
-    def __str__(self):
-        return self.name
+def validate_tags(value):
+    from IPython import embed; embed()
 
 
 class Repository(models.Model):
@@ -29,14 +20,11 @@ class Repository(models.Model):
     url = models.URLField(verbose_name='URL')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     language = models.CharField(verbose_name='Linguagem', max_length=255, null=True, blank=True)
-    tags = models.ManyToManyField(Tag, verbose_name='Tags')
+    tags = models.CharField(verbose_name='Tags', max_length=255, null=True, blank=True)#, validators=[validate_tags])
     created_at = models.DateTimeField(verbose_name='Criado em', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='Atualizado em', auto_now=True)
 
     objects = RepositoryManager()
-
-    def get_tags(self):
-        return ', '.join(tag.name for tag in self.tags.all())
 
     def __str__(self):
         return self.name

@@ -9,15 +9,11 @@ class SearchTest(BaseTest):
         self.login()
 
         self.obj1 = mommy.make('core.Repository', user=self.user, name='Java', url='http://github.com',
-                               language='java')
+                               language='java', tags='java')
         self.obj2 = mommy.make('core.Repository', user=self.user, name='Python', url='http://github.com',
-                               language='python')
+                               language='python', tags='python')
         self.obj3 = mommy.make('core.Repository', user=self.user, name='Javascript', url='http://github.com',
-                               language='javascript')
-
-        self.obj1.tags.add(mommy.make('core.Tag', name='java'))
-        self.obj2.tags.add(mommy.make('core.Tag', name='python'))
-        self.obj3.tags.add(mommy.make('core.Tag', name='javascript'))
+                               language='javascript', tags='javascript')
 
     def test_filter_by_tag_java(self):
         response = self.client.get('{}?tag_name=java'.format(resolve_url('repositories')),

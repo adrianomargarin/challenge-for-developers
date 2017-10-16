@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from githubstars.core.models import Tag
 from githubstars.core.models import Repository
 from githubstars.core.tests.mixins import BaseTest
 
@@ -21,18 +20,8 @@ class RepositoryModelTest(BaseTest):
     def test_str(self):
         self.assertEqual('Test', str(self.obj))
 
+    # def test_create_with_duplicate_tag(self):
+    #     obj = Repository(user=self.user, repo_id=1, name='Test 2', url='http://github.com', tags='python, python')
+    #     obj.clean_fields()
 
-class TagModelTest(BaseTest):
-
-    def setUp(self):
-        self.obj = Tag(name='python')
-        self.obj.save()
-
-    def test_create(self):
-        self.assertTrue(Tag.objects.exists())
-
-    def test_created_at(self):
-        self.assertIsInstance(self.obj.created_at, datetime)
-
-    def test_str(self):
-        self.assertEqual('python', str(self.obj))
+    #     # self.assertIsNone(obj.id)

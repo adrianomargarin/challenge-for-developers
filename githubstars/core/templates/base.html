@@ -4,13 +4,13 @@
 <head>
   <title>Github Stars</title>
 
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
+  <link
+    rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
   <nav class="navbar navbar-default">
@@ -24,36 +24,47 @@
   </nav>
   <div class="container">
     {% block content %}
-      <div class="col-md-4">
+      <div class="pull-left">
         <a href="{% url 'get_repositories' %}" type="button" class="btn btn-default">Buscar no github</a>
       </div>
+
+      <div class="pull-right">
+        <form id="search" class="form-inline">
+          <div class="form-group">
+            <input type="text" name="tag_name" id="tag_name" class="form-control" placeholder="Pesquisar por tag">
+            <input type="submit" class="btn btn-primary" value="Pesquisar">
+          </div>
+        </form>
+      </div>
+
       <div class="clearfix"></div>
       <hr>
-      {% if repository_list %}
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>URl</th>
-              <th>Linguagem</th>
-              <th>Tags</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for repository in repository_list %}
-              <tr>
-                <td>{{ repository.name }}</td>
-                <td><a href="{{ repository.url }}" target="_blank">{{ repository.url }}</a></td>
-                <td>{{ repository.language }}</td>
-                <td>{{ repository.get_tags }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      {% else %}
-        <div class="alert alert-info">Nenhum repositório encontrado.</div>
-      {% endif %}
+
+      <table class="table" >
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>URL</th>
+            <th>Linguagem</th>
+            <th>Tags</th>
+          </tr>
+        </thead>
+        <tbody id="body-repositories"></tbody>
+      </table>
     {% endblock content %}
   </div>
+
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+
+  <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+
+  <script src="{% static 'js/main.js' %}"></script>
+
 </body>
 </html>

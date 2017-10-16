@@ -21,13 +21,12 @@ class BaseView(View):
         return super(BaseView, self).dispatch(request, *args, **kwargs)
 
 
-class HomeView(BaseView, ListView):
+class HomeView(BaseView):
 
     template_name = 'base.html'
-    model = Repository
 
-    def get_queryset(self):
-        return self.model.objects.filter_by_user(self.request.user)
+    def get(self, request):
+        return render(request, self.template_name)
 
 
 home = HomeView.as_view()
@@ -68,15 +67,14 @@ class RepositoryView(BaseView):
             result.append({
                 "name": repository.name,
                 "url": repository.url,
-                "language": repository.language,
-                "tags": repository.get_tags()
+                "language": repository.language or '-',
+                "tags": repository.tags or '-'
             })
 
         return result
 
     def get(self, request):
-        tag_name = request.GET.get('tag_name')
-        repositories = Repository.objects.filter_by_tag(user=request.user, tag_name=tag_name)
+        repositories = Repository.objects.filter_by_tag(user=request.user, tag_name=request.GET.get('tag_name', ''))
 
         return JsonResponse(self.to_dict(repositories), safe=False)
 
@@ -84,7 +82,7 @@ class RepositoryView(BaseView):
 repositories = RepositoryView.as_view()
 
 
-class GetRepositoriesView(BaseView):
+class GetRepositoriesGithubView(BaseView):
 
     def get(self, request):
         contents = GithubAPI(request.user.username).get_content()
@@ -99,4 +97,7 @@ class GetRepositoriesView(BaseView):
         return redirect(reverse_lazy('home'))
 
 
-get_repositories = GetRepositoriesView.as_view()
+get_repositories = GetRepositoriesGithubView.as_view()
+
+
+# class

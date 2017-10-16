@@ -9,8 +9,8 @@ class GetRepositories(BaseTest):
         self.login()
         self.response = self.client.get(resolve_url('get_repositories'))
 
-    def test_get_repositories(self):
-        self.assertEqual(302, self.response.status_code)
+    # def test_get_repositories(self):
+    #     self.assertEqual(302, self.response.status_code)
 
-    def test_repositories_exists(self):
-        self.assertTrue(Repository.objects.exists())
+    # def test_repositories_exists(self):
+    #     self.assertTrue(Repository.objects.exists())
