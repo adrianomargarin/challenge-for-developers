@@ -1,11 +1,15 @@
 from django.db import models
 from django.conf import settings
-from githubstars.core.managers import RepositoryManager
-
 from django.core.exceptions import ValidationError
 
-def validate_tags(value):
-    from IPython import embed; embed()
+from githubstars.core.managers import RepositoryManager
+
+
+def validator_tags(value):
+    result_list = [string.strip() for string in value.split(',')]
+
+    if not len(result_list) == len(set(result_list)):
+        raise ValidationError('Existem tags duplicadas.')
 
 
 class Repository(models.Model):
@@ -20,7 +24,7 @@ class Repository(models.Model):
     url = models.URLField(verbose_name='URL')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     language = models.CharField(verbose_name='Linguagem', max_length=255, null=True, blank=True)
-    tags = models.CharField(verbose_name='Tags', max_length=255, null=True, blank=True)#, validators=[validate_tags])
+    tags = models.CharField(verbose_name='Tags', max_length=255, null=True, blank=True, validators=[validator_tags])
     created_at = models.DateTimeField(verbose_name='Criado em', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='Atualizado em', auto_now=True)
 

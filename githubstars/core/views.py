@@ -7,6 +7,7 @@ from django.views.generic import View
 from django.views.generic import ListView
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Permission
 from django.utils.decorators import method_decorator
 
 from githubstars.core.models import Repository
@@ -48,7 +49,12 @@ class RegisterView(View):
             User = get_user_model()
             user = User.objects.create_user(username=form.cleaned_data['username'])
             user.set_password(form.cleaned_data['password'])
+            user.is_staff = True
             user.save()
+
+            user.user_permissions.set([
+                Permission.objects.get(codename='change_repository'),
+                Permission.objects.get(codename='delete_repository')])
 
             return redirect(self.success_url)
 
@@ -68,7 +74,8 @@ class RepositoryView(BaseView):
                 "name": repository.name,
                 "url": repository.url,
                 "language": repository.language or '-',
-                "tags": repository.tags or '-'
+                "tags": repository.tags or '-',
+                "url_admin": reverse_lazy('admin:core_repository_change', args=[repository.pk])
             })
 
         return result
@@ -98,6 +105,3 @@ class GetRepositoriesGithubView(BaseView):
 
 
 get_repositories = GetRepositoriesGithubView.as_view()
-
-
-# class

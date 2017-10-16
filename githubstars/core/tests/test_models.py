@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.core.exceptions import ValidationError
 
 from githubstars.core.models import Repository
 from githubstars.core.tests.mixins import BaseTest
@@ -20,8 +21,8 @@ class RepositoryModelTest(BaseTest):
     def test_str(self):
         self.assertEqual('Test', str(self.obj))
 
-    # def test_create_with_duplicate_tag(self):
-    #     obj = Repository(user=self.user, repo_id=1, name='Test 2', url='http://github.com', tags='python, python')
-    #     obj.clean_fields()
+    def test_create_with_duplicate_tag(self):
+        with self.assertRaises(ValidationError):
+            obj = Repository(user=self.user, repo_id=1, name='Test 2', url='http://github.com', tags='python, python')
+            obj.clean_fields()
 
-    #     # self.assertIsNone(obj.id)
